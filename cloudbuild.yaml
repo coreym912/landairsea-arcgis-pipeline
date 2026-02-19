@@ -1,0 +1,41 @@
+steps:
+  # Build the container image
+  - name: 'gcr.io/cloud-builders/docker'
+    args: ['build', '-t', 'gcr.io/LandAirSea-RRS/landairsea-rrs-pipeline', '.']
+
+  # Push the container image
+  - name: 'gcr.io/cloud-builders/docker'
+    args: ['push', 'gcr.io/LandAirSea-RRS/landairsea-rrs-pipeline']
+    
+  # Deploy to Cloud Run
+  - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
+    entrypoint: gcloud
+    args:
+      - 'run'
+      - 'deploy'
+      - 'landairsea-rrs-pipeline'
+      - '--image'
+      - 'gcr.io/LandAirSea-RRS/landairsea-rrs-pipeline'
+      - '--region'
+      - 'us-central1'
+      - '--platform'
+      - 'managed'
+      - '--memory'
+      - '1Gi'
+      - '--cpu'
+      - '1'
+      - '--min-instances'
+      - '1'
+      - '--max-instances'
+      - '2'
+      - '--set-env-vars'
+      - 'GOOGLE_CLOUD_PROJECT=LandAirSea-RRS'
+      - '--set-secrets'
+      - 'CLIENT_TOKEN=rrs-client-token:latest,USERNAME=rrs-username:latest,PASSWORD=rrs-password:latest'
+      - '--no-allow-unauthenticated'
+
+images:
+  - 'gcr.io/LandAirSea-RRS/landairsea-rrs-pipeline'
+
+options:
+  logging: CLOUD_LOGGING_ONLY
