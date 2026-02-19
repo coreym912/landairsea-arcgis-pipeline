@@ -1,11 +1,11 @@
 steps:
   # Build the container image
   - name: 'gcr.io/cloud-builders/docker'
-    args: ['build', '-t', 'gcr.io/LandAirSea-RRS/landairsea-rrs-pipeline', '.']
+    args: ['build', '-t', 'gcr.io/landairsea-rrs/landairsea-rrs-pipeline', '.']
 
   # Push the container image
   - name: 'gcr.io/cloud-builders/docker'
-    args: ['push', 'gcr.io/LandAirSea-RRS/landairsea-rrs-pipeline']
+    args: ['push', 'gcr.io/landairsea-rrs/landairsea-rrs-pipeline']
     
   # Deploy to Cloud Run
   - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
@@ -15,7 +15,7 @@ steps:
       - 'deploy'
       - 'landairsea-rrs-pipeline'
       - '--image'
-      - 'gcr.io/LandAirSea-RRS/landairsea-rrs-pipeline'
+      - 'gcr.io/landairsea-rrs/landairsea-rrs-pipeline'
       - '--region'
       - 'us-central1'
       - '--platform'
@@ -29,13 +29,13 @@ steps:
       - '--max-instances'
       - '2'
       - '--set-env-vars'
-      - 'GOOGLE_CLOUD_PROJECT=LandAirSea-RRS'
+      - 'GOOGLE_CLOUD_PROJECT=landairsea-rrs'
       - '--set-secrets'
       - 'CLIENT_TOKEN=rrs-client-token:latest,USERNAME=rrs-username:latest,PASSWORD=rrs-password:latest'
       - '--no-allow-unauthenticated'
 
 images:
-  - 'gcr.io/LandAirSea-RRS/landairsea-rrs-pipeline'
+  - 'gcr.io/landairsea-rrs/landairsea-rrs-pipeline'
 
 options:
   logging: CLOUD_LOGGING_ONLY

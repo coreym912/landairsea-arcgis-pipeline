@@ -10,7 +10,7 @@ logger = logging.getLogger(__name__)
 app = Flask(__name__)
 
 # Project ID from environment variable
-PROJECT_ID = os.environ.get("GOOGLE_CLOUD_PROJECT", "LandAirSea-RRS")
+PROJECT_ID = os.environ.get("GOOGLE_CLOUD_PROJECT", "landairsea-rrs")
 
 @app.route('/', methods=['GET'])
 def health():
