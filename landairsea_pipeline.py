@@ -108,10 +108,10 @@ class LandAirSeaToBigQuery:
                     'heading': float(device.get('heading', 0)),
                     'elevation': float(device.get('elevation', 0)),
                     'voltage': float(device.get('voltage', 0)),
-                    'is_stopped': bool(device.get('isstopped', False)),
+                    'is_stopped': 1 if device.get('isstopped', False) else 0,
                     'cellular_strength': int(device.get('cellularstrength', 0)),
                     'satellite_strength': int(device.get('satellitestrength', 0)),
-                    'interval': int(device.get('interval', 0)),
+                    'update_interval': int(device.get('interval', 0)),
                     'last_location_timestamp': last_location_ts
                 }
                 
